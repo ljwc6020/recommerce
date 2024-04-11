@@ -27,21 +27,5 @@ public interface UserRepository extends JpaRepository<User, String> {
     @EntityGraph(attributePaths = {"userRoleList"})
     Optional<User> findByEmail(String email);
 
-    // 사용자의 현재 비밀번호가 유효한지 확인하는 메서드입니다.
-    // 이 메서드는 사용자의 비밀번호 변경 시 현재 비밀번호 확인에 사용됩니다.
-    // @param username 사용자의 유저네임입니다.
-    // @param currentPassword 사용자가 입력한 현재 비밀번호입니다.
-    // @return 비밀번호가 일치하면 true를 반환합니다.
-
-    boolean validateCurrentPassword(String email, String pw);
-
-    // 사용자가 계정을 삭제하기 위해 제공한 비밀번호가 유효한지 확인하는 메서드입니다.
-    // 이 메서드는 계정 삭제 요청 시 비밀번호 확인에 사용됩니다.
-    // @param username 사용자의 유저네임입니다.
-    // @param password 사용자가 계정 삭제를 위해 입력한 비밀번호입니다.
-    // @return 비밀번호가 일치하면 true를 반환합니다.
-
-    boolean PasswordForDeletion(String email, String pw);
-
 
 }

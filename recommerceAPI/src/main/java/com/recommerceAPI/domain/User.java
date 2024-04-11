@@ -55,14 +55,14 @@ public class User {
         this.birth = birth;
     }
 
-    // 사용자의 개인정보 변경 비밀번호 확인 메서드
-    public boolean validateCurrentPassword(String email, String Pw) {
-        return this.pw.equals(Pw);
+    // 사용자의 현재 비밀번호가 유효한지 확인합니다.
+    public boolean validateCurrentPassword(String currentPassword) {
+        return this.pw.equals(currentPassword);
     }
 
-    // 사용자의 탈퇴 요청 시 제공된 비밀번호와 일치하는지 확인하는 메서드
-    public boolean PasswordForDeletion(String email, String pw) {
-        return this.pw.equals(pw);
+    // 사용자의 계정 삭제 요청 시 제공된 비밀번호가 유효한지 확인합니다.
+    public boolean validatePasswordForDeletion(String deletionPassword) {
+        return this.pw.equals(deletionPassword);
     }
 
 }

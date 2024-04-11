@@ -2,10 +2,8 @@ package com.recommerceAPI.service;
 
 
 import com.recommerceAPI.domain.User;
-import com.recommerceAPI.domain.UserRating;
 import com.recommerceAPI.domain.UserRole;
 import com.recommerceAPI.dto.UserDTO;
-import com.recommerceAPI.repository.UserRatingRepository;
 import com.recommerceAPI.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -30,8 +28,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     // PasswordEncoder는 비밀번호를 안전하게 인코딩하는 데 사용됩니다.
     private final PasswordEncoder passwordEncoder;
-    @Autowired
-    private UserRatingRepository userRatingRepository;
 
 
     @Override
@@ -82,28 +78,19 @@ public class UserServiceImpl implements UserService {
 
     // 사용자의 개인정보 변경 시 비밀번호 확인 메서드
     @Override
-    public boolean validateCurrentPassword(String email, String pw) {
+    public boolean validateCurrentPassword(String email, String currentPassword) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
 
-        return passwordEncoder.matches(pw, user.getPw());
+        return passwordEncoder.matches(currentPassword, user.getPw());
     }
 
-    // 사용자의 탈퇴 요청 시 제공된 비밀번호와 일치하는지 확인하는 메서드
     @Override
-    public boolean PasswordForDeletion(String email, String pw) {
+    public boolean validatePasswordForDeletion(String email, String deletionPassword) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
 
-        return passwordEncoder.matches(pw, user.getPw());
+        return passwordEncoder.matches(deletionPassword, user.getPw());
     }
 
-    @Override
-    public double calculateUserRating(Long userId) {
-        List<UserRating> ratings = userRatingRepository.findByUserId(userId);
-        return ratings.stream()
-                .mapToDouble(UserRating::getRating)
-                .average()
-                .orElse(0.0); // 평점이 없는 경우 0을 반환
-    }
 }
