@@ -22,6 +22,7 @@ public class WishlistController {
     private final WishlistService wishlistService;
 
     // 카트 아이템 수량 변경 요청을 처리하는 메서드
+//    @PreAuthorize("#itemDTO.email == authentication.name")
     @PostMapping("/change")
     public List<WishlistItemListDTO> changeCart(@RequestBody WishlistItemDTO itemDTO){
         log.info(itemDTO);
