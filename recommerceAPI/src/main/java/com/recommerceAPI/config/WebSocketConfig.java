@@ -11,7 +11,11 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new ChatHandler(), " /api/chat")
+        // ChatHandler 인스턴스 생성
+        ChatHandler chatHandler = new ChatHandler();
+
+        // WebSocket 핸들러 등록
+        registry.addHandler(chatHandler, "/api/chat")
                 .setAllowedOrigins("http://localhost:3000");
     }
 }
