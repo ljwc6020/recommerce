@@ -97,15 +97,22 @@ public class UserController {
 
     // 현재 비밀번호 검증을 처리하는 엔드포인트
     @GetMapping("/validate-password")
-    public ResponseEntity<?> validateCurrentPassword(@RequestParam String username, @RequestParam String password) {
-        boolean isValid = userService.validateCurrentPassword(username, password);
+    public ResponseEntity<?> validateCurrentPassword(@RequestParam String email, @RequestParam String pw) {
+        boolean isValid = userService.validateCurrentPassword(email, pw);
         return isValid ? ResponseEntity.ok("Password is valid") : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
     }
 
     // 계정 삭제 전 비밀번호 검증을 처리하는 엔드포인트
     @GetMapping("/validate-deletion")
-    public ResponseEntity<?> validatePasswordForDeletion(@RequestParam String username, @RequestParam String password) {
-        boolean isValid = userService.validatePasswordForDeletion(username, password);
+    public ResponseEntity<?> validatePasswordForDeletion(@RequestParam String email, @RequestParam String pw) {
+        boolean isValid = userService.PasswordForDeletion(email, pw);
         return isValid ? ResponseEntity.ok("Password is valid for deletion") : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password for deletion");
+    }
+
+    // 사용자의 평점 조회
+    @GetMapping("/{userId}/rating")
+    public ResponseEntity<Double> getUserRating(@PathVariable Long userId) {
+        double rating = userService.calculateUserRating(userId);
+        return ResponseEntity.ok(rating);
     }
 }

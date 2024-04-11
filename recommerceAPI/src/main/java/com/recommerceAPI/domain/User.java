@@ -56,13 +56,13 @@ public class User {
     }
 
     // 사용자의 개인정보 변경 비밀번호 확인 메서드
-    public boolean validateCurrentPassword(String currentPassword) {
-        return this.pw.equals(currentPassword);
+    public boolean validateCurrentPassword(String email, String Pw) {
+        return this.pw.equals(Pw);
     }
 
     // 사용자의 탈퇴 요청 시 제공된 비밀번호와 일치하는지 확인하는 메서드
-    public boolean PasswordForDeletion(String password) {
-        return this.pw.equals(password);
+    public boolean PasswordForDeletion(String email, String pw) {
+        return this.pw.equals(pw);
     }
 
 }

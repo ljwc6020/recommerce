@@ -33,7 +33,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     // @param currentPassword 사용자가 입력한 현재 비밀번호입니다.
     // @return 비밀번호가 일치하면 true를 반환합니다.
 
-    boolean validateCurrentPassword(String username, String currentPassword);
+    boolean validateCurrentPassword(String email, String pw);
 
     // 사용자가 계정을 삭제하기 위해 제공한 비밀번호가 유효한지 확인하는 메서드입니다.
     // 이 메서드는 계정 삭제 요청 시 비밀번호 확인에 사용됩니다.
@@ -41,10 +41,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     // @param password 사용자가 계정 삭제를 위해 입력한 비밀번호입니다.
     // @return 비밀번호가 일치하면 true를 반환합니다.
 
-    boolean validatePasswordForDeletion(String username, String password);
+    boolean PasswordForDeletion(String email, String pw);
 
-    // 유저네임을 기준으로 User 엔티티를 조회하는 메서드입니다.
-    // 반환 타입은 Optional로, 조회된 사용자 정보가 있을 수도 있고 없을 수도 있음을 나타냅니다.
-    Optional<User> findByUsername(String username);
 
 }
