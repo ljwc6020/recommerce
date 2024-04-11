@@ -27,10 +27,6 @@ public class Product {
 
     private boolean delFlag;
 
-    private int totalReviews; // 총 리뷰 수
-
-    private int totalQna; // 총 Q&A 수
-
 
     public void changeDel(boolean delFlag) {
         this.delFlag = delFlag;
