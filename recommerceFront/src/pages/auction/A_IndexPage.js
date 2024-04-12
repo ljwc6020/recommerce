@@ -11,7 +11,7 @@ const A_IndexPage = () => {
   return (
     <>
       <BasicLayout>
-        <A_ListComponent />
+        <Outlet />
       </BasicLayout>
     </>
   );

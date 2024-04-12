@@ -12,7 +12,7 @@ const AuctionModify = lazy(() =>
 const auctionRouter = () => {
   return [
     {
-      path: "/auction/list",
+      path: "list",
       element: (
         <Suspense fallback={Loading}>
           <AuctionList />
