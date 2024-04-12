@@ -23,7 +23,7 @@ import lombok.extern.log4j.Log4j2;
 @CrossOrigin
 @RequiredArgsConstructor
 @Log4j2
-@RequestMapping("/api/products")
+
 public class ProductController {
 
     // 여기 하나만 조회하는 기능 추가 해주셔야 합니다.
@@ -31,7 +31,7 @@ public class ProductController {
     private final CustomFileUtil fileUtil;
 
 
-    @GetMapping("/list")
+    @GetMapping("/")
     public PageResponseDTO<ProductDTO> list (PageRequestDTO pageRequestDTO, String pname){
 
         log.info("list----------------------"+ pageRequestDTO);
@@ -40,7 +40,7 @@ public class ProductController {
     }
     // 특정 상품 번호(pno)에 대한 상세 정보를 조회하는 API
 
-    @GetMapping(value ="/read/{pno}")
+    @GetMapping(value ="/product/read/{pno}")
     public ProductDTO getProduct(@PathVariable(name="pno") Long pno) {
         log.info("getProduct: " + pno);
 
@@ -52,7 +52,7 @@ public class ProductController {
         return productDTO;
     }
 
-    @GetMapping("/view/{fileName}")
+    @GetMapping("/product/view/{fileName}")
     public ResponseEntity<Resource> viewFileGET(@PathVariable String fileName){
 
         return fileUtil.getFile(fileName);
@@ -60,7 +60,7 @@ public class ProductController {
     }
 
 
-    @PostMapping("/")
+    @PostMapping("/product/register")
     public Map<String, Long> register(ProductDTO productDTO){
 
         log.info("register: " + productDTO);
@@ -86,7 +86,7 @@ public class ProductController {
     }
 
 
-    @PutMapping("/{pno}")
+    @PutMapping("product/modify/{pno}")
     public Map<String, String> modify(@PathVariable(name="pno")Long pno, ProductDTO productDTO) {
 
         productDTO.setPno(pno);
@@ -129,7 +129,7 @@ public class ProductController {
     }
 
 
-    @DeleteMapping("/{pno}")
+    @DeleteMapping("product/delete/{pno}")
     public Map<String, String> remove(@PathVariable("pno") Long pno) {
         //삭제해야할 파일들 알아내기
         List<String> oldFileNames =  productService.get(pno).getUploadFileNames();

@@ -9,13 +9,13 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class ProductDTO {
 
-    private Long pno; // 상품 번호
+    private Long pnum; // 상품 번호
 
     private String pname; // 상품 이름
 
     private int price; // 상품 가격
 
-    private String pdesc; // 상품 설명
+    private String pexp; // 상품 설명
 
     private boolean delFlag; // 삭제 플래그
 

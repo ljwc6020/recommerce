@@ -49,9 +49,9 @@ public class ProductServiceImpl implements ProductService {
             ProductImage productImage = (ProductImage) arr[1];
 
             ProductDTO productDTO = ProductDTO.builder()
-                    .pno(product.getPno())
+                    .pnum(product.getPnum())
                     .pname(product.getPname())
-                    .pdesc(product.getPdesc())
+                    .pexp(product.getPexp())
                     .price(product.getPrice())
                     .delFlag(product.isDelFlag())
                     .build();
@@ -80,15 +80,15 @@ public class ProductServiceImpl implements ProductService {
 
         Product result = productRepository.save(product);
 
-        return result.getPno();
+        return result.getPnum();
     }
 
     private Product dtoToEntity(ProductDTO productDTO){
 
         Product product = Product.builder()
-                .pno(productDTO.getPno())
+                .pnum(productDTO.getPnum())
                 .pname(productDTO.getPname())
-                .pdesc(productDTO.getPdesc())
+                .pexp(productDTO.getPexp())
                 .price(productDTO.getPrice())
                 .build();
 
@@ -123,9 +123,9 @@ public class ProductServiceImpl implements ProductService {
     private ProductDTO entityToDTO(Product product){
 
         ProductDTO productDTO = ProductDTO.builder()
-                .pno(product.getPno())
+                .pnum(product.getPnum())
                 .pname(product.getPname())
-                .pdesc(product.getPdesc())
+                .pexp(product.getPexp())
                 .price(product.getPrice())
                 .build();
 
@@ -146,13 +146,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void modify(ProductDTO productDTO) {
         //step1 read
-        Optional<Product> result = productRepository.findById(productDTO.getPno());
+        Optional<Product> result = productRepository.findById(productDTO.getPnum());
 
         Product product = result.orElseThrow();
 
         //2. change pname, pdesc, price
         product.changeName(productDTO.getPname());
-        product.changeDesc(productDTO.getPdesc());
+        product.changeDesc(productDTO.getPexp());
         product.changePrice(productDTO.getPrice());
 
         //3. upload File -- clear first
