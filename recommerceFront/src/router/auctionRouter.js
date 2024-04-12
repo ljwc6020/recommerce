@@ -18,7 +18,7 @@ const auctionRouter = () => {
       ),
     },
     {
-      path: "read/:pno",
+      path: "read/:apno",
       element: (
         <Suspense fallback={Loading}>
           <AuctionRead />
@@ -34,7 +34,7 @@ const auctionRouter = () => {
       ),
     },
     {
-      path: "modify/:pno",
+      path: "modify/:apno",
       element: (
         <Suspense fallback={Loading}>
           <AuctionModify />
