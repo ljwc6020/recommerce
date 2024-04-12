@@ -17,13 +17,13 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long pnum;
+    private Long pno;
 
     private String pname;
 
     private int price;
 
-    private String pexp;
+    private String pdesc;
 
     private boolean delFlag;
 
@@ -42,7 +42,7 @@ public class Product {
     }
 
     public void changeDesc(String desc){
-        this.pexp = desc;
+        this.pdesc = desc;
     }
 
     public void changeName(String name){
