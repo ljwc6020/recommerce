@@ -50,7 +50,7 @@ const useCustomMovePage = (pno) => {
     console.log(queryDefault);
 
     navigate({
-      pathname: `../read/${num}`,
+      pathname: `./read/${num}`,
       search: queryDefault,
     });
   };
@@ -94,7 +94,7 @@ const useCustomMovePage = (pno) => {
 
     if (pageParam) {
       const pageNum = getNum(pageParam.page, 1);
-      const sizeNum = getNum(pageParam.size, 12);
+      const sizeNum = getNum(pageParam.size, 8);
 
       queryString = createSearchParams({
         page: pageNum,
@@ -104,8 +104,9 @@ const useCustomMovePage = (pno) => {
       queryString = queryDefault;
     }
 
+    // 급한대로 그냥 수정
     navigate({
-      pathname: `../list`,
+      pathname: `/auction/list`,
       search: queryString,
     });
     setRefresh(!refresh);

@@ -1,38 +1,41 @@
+import React from "react";
+
 const PagingComponent = ({ serverData, movePage }) => {
+  // 아마 폰트설정 안가져와서 안뜨는듯?
   return (
-    <div className="paging_wrap">
-      {serverData.prev ? (
+    <div className="flex justify-center items-center">
+      {serverData.prev && (
         <div
-          className="paging_box"
+          className="mr-2 cursor-pointer"
           onClick={() => movePage({ page: serverData.prevPage })}
         >
-          ◀
+          <span role="img" aria-label="previous-page">
+            ◀
+          </span>
         </div>
-      ) : (
-        <></>
       )}
 
       {serverData.pageNumList.map((pageNum) => (
         <div
           key={pageNum}
-          className={`paging_box ${
-            serverData.current === pageNum ? "now" : ""
-          }`}
+          className={`mx-2 ${
+            serverData.current === pageNum ? "font-bold" : ""
+          } cursor-pointer`}
           onClick={() => movePage({ page: pageNum })}
         >
           {pageNum}
         </div>
       ))}
 
-      {serverData.next ? (
+      {serverData.next && (
         <div
-          className="paging_box"
+          className="ml-2 cursor-pointer"
           onClick={() => movePage({ page: serverData.nextPage })}
         >
-          ▶
+          <span role="img" aria-label="next-page">
+            ▶
+          </span>
         </div>
-      ) : (
-        <></>
       )}
     </div>
   );

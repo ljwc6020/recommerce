@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import A_ListComponent from "../../components/auction/A_ListComponent";
 import BasicLayout from "../../layouts/BasicLayout";
 
@@ -11,9 +11,8 @@ const A_IndexPage = () => {
   return (
     <>
       <BasicLayout>
-        <div>
-          <A_ListComponent />
-        </div>
+        <A_ListComponent />
+        <Outlet />
       </BasicLayout>
     </>
   );
