@@ -6,12 +6,11 @@ const ProductList = lazy(() => import("../pages/product/P_ListPage"));
 const ProductRead = lazy(() => import("../pages/product/P_ReadPage"));
 const ProductAdd = lazy(() => import("../pages/product/P_AddPage"));
 const ProductModify = lazy(() => import("../pages/product/P_ModifyPage"));
-const ProductCart = lazy(() => import("../pages/product/cart/CartPage"));
 
 const productRouter = () => {
   return [
     {
-      path: "/product/list",
+      path: "/",
       element: (
         <Suspense fallback={Loading}>
           <ProductList />
@@ -19,7 +18,7 @@ const productRouter = () => {
       ),
     },
     {
-      path: "read/:pno",
+      path: "/product/read/:pno",
       element: (
         <Suspense fallback={Loading}>
           <ProductRead />
@@ -27,7 +26,7 @@ const productRouter = () => {
       ),
     },
     {
-      path: "add",
+      path: "/product/register",
       element: (
         <Suspense fallback={Loading}>
           <ProductAdd />
@@ -35,18 +34,10 @@ const productRouter = () => {
       ),
     },
     {
-      path: "modify/:pno",
+      path: "/product/modify/:pno",
       element: (
         <Suspense fallback={Loading}>
           <ProductModify />
-        </Suspense>
-      ),
-    },
-    {
-      path: "/product/cart",
-      element: (
-        <Suspense fallback={Loading}>
-          <ProductCart />
         </Suspense>
       ),
     },
