@@ -15,13 +15,13 @@ import org.springframework.data.repository.query.Param;
 public interface ProductRepository extends JpaRepository<Product, Long>{
 
     @EntityGraph(attributePaths = "imageList")
-    @Query("select p from Product p where p.pnum = :pnum")
-    Optional<Product> selectOne(@Param("pno") Long pnum);
+    @Query("select p from Product p where p.pno = :pno")
+    Optional<Product> selectOne(@Param("pno") Long pno);
 
 
     @Modifying
-    @Query("update Product p set p.delFlag = :flag where p.pnum = :pnum")
-    void updateToDelete(@Param("pno") Long pnum, @Param("flag") boolean flag);
+    @Query("update Product p set p.delFlag = :flag where p.pno = :pno")
+    void updateToDelete(@Param("pno") Long pno, @Param("flag") boolean flag);
 
     //   이미지가 포함된 목록 처리
     @Query("select p, pi from Product p left join p.imageList pi where (pi.ord = 0 and p.delFlag = false) and (:pname is null or p.pname like %:pname%)")
