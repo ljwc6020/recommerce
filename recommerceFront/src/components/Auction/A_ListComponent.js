@@ -22,7 +22,7 @@ const initState = {
   current: 0,
 };
 
-const ListComponent_p = () => {
+const A_ListComponent = () => {
   const { page, size, refresh, moveProoductListPage, moveReadPage } =
     useCustomMovePage();
   const [serverData, setServerData] = useState(initState);
@@ -99,4 +99,4 @@ const ListComponent_p = () => {
   );
 };
 
-export default ListComponent_p;
+export default A_ListComponent;
