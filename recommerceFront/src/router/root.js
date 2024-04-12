@@ -6,7 +6,7 @@ import userRouter from "./userRouter";
 const Loading = <div>Loading....</div>;
 const Main = lazy(() => import("../pages/MainPage"));
 const ProductIndex = lazy(() => import("../pages/product/P_IndexPage"));
-const LoginIndex = lazy(() => import("../pages/user/LoginPage"));
+const LoginIndex = lazy(() => import("../pages/user/IndexPage"));
 
 const root = createBrowserRouter([
   {
