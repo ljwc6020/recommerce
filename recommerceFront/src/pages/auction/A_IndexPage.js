@@ -1,12 +1,23 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import BasicLayout from "../../layouts/BasicLayout";
 
 const A_IndexPage = () => {
+  const location = useLocation();
+
   return (
-    <div>
-      A_IndexPage
-      <Outlet />
-    </div>
+    <BasicLayout>
+      <div>
+        <div>
+          <ul>
+            <li>- 경매 -</li>
+            <li></li>
+          </ul>
+        </div>
+        <div>
+          <Outlet />
+        </div>
+      </div>
+    </BasicLayout>
   );
 };
 
