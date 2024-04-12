@@ -59,7 +59,7 @@ const ListComponent_p = () => {
                 <div className="shopList_info">
                   <div className="shopList_thum">
                     <img
-                      alt={auctionProduct.apName}
+                      alt={auctionProduct.apno}
                       src={`${host}/auction/view/s_${auctionProduct.uploadFileNames[0]}`}
                       className="w-full h-full object-cover"
                     />
