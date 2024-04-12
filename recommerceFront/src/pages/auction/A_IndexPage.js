@@ -12,7 +12,6 @@ const A_IndexPage = () => {
     <>
       <BasicLayout>
         <A_ListComponent />
-        <Outlet />
       </BasicLayout>
     </>
   );
