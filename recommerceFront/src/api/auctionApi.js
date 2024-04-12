@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_SERVER_HOST } from "./userApi";
 
-const host = `${API_SERVER_HOST}/api/products`;
+const host = `${API_SERVER_HOST}/auction`;
 
 // getList 함수에서의 params 사용 간소화
 export const getList = async (pageParam) => {

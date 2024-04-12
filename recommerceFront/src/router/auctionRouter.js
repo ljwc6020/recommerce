@@ -2,10 +2,12 @@ import React, { Suspense, lazy } from "react";
 import { Navigate } from "react-router-dom";
 
 const Loading = <div>Loading...</div>;
-const AuctionList = lazy(() => import("../pages/auction/A_ListPage"));
-const AuctionRead = lazy(() => import("../pages/auction/A_ReadPage"));
-const AuctionAdd = lazy(() => import("../pages/auction/A_Addpage"));
-const AuctionModify = lazy(() => import("../pages/auction/A_ModifyPage"));
+const AuctionList = lazy(() => import("../components/auction/A_ListComponent"));
+const AuctionRead = lazy(() => import("../components/auction/A_ReadComponent"));
+const AuctionAdd = lazy(() => import("../components/auction/A_AddComponent"));
+const AuctionModify = lazy(() =>
+  import("../components/auction/A_ModifyComponent")
+);
 
 const auctionRouter = () => {
   return [
