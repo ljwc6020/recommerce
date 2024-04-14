@@ -46,57 +46,53 @@ const A_ListComponent = () => {
   });
 
   return (
-<div className="flex justify-center items-center" style={{ width: "100%" }}>
-  <div className="flex justify-center items-center" >
-    <div className="shopList_area grid grid-cols-4 gap-4" style={{ width: "1160px", height: "600px" }}>
-      {serverData.dtoList.map((auctionProduct) => (
-        <div
-          key={auctionProduct.apno}
-          className="shopList_wrap mt-64"
-          onClick={() => moveReadPage(auctionProduct.apno)}
-          style={{ width: "300px", height: "100px" }} 
-        >
-          <div className="shopList_box">
-            <div className="shopList_info flex">
-              <div className="shopList_thum mr-2">
-                <img
-                  alt={auctionProduct.apno}
-                  src={`${host}/auction/view/s_${auctionProduct.uploadFileNames[0]}`}
-
-                  className="w-40 h-40 object-cover"
-                />
+<div className="flex justify-center items-center flex-col" style={{ minHeight: "80vh"  }}> {/* minHeight 추가 */}
+  <div className="shopList_area grid grid-cols-4 gap-4" style={{ width: "1160px" }}> {/* height 삭제 */}
+    {serverData.dtoList.map((auctionProduct) => (
+      <div
+        key={auctionProduct.apno}
+        className="shopList_wrap mt-64"
+        onClick={() => moveReadPage(auctionProduct.apno)}
+        style={{ width: "300px", height: "100px" }} 
+      >
+        <div className="shopList_box">
+          <div className="shopList_info flex">
+            <div className="shopList_thum mr-2">
+              <img
+                alt={auctionProduct.apno}
+                src={`${host}/auction/view/s_${auctionProduct.uploadFileNames[0]}`}
+                className="w-40 h-40 object-cover"
+              />
+            </div>
+            <div className="shopList_sum">
+              <div className="shopList_pname text-sm">
+                {auctionProduct.apName}
               </div>
-          
-              <div className="shopList_sum">
-                <div className="shopList_pname text-sm">
-                  {auctionProduct.apName}
-                </div>
-                <div className="shopList_price text-sm">
-                  {formatNumber(auctionProduct.apStartPrice)}원
-                </div>
+              <div className="shopList_price text-sm">
+                {formatNumber(auctionProduct.apStartPrice)}원
               </div>
             </div>
           </div>
-          
         </div>
-      ))}
-    </div>
-    <div className="flex justify-center mt-8"> {/* 여기에 페이지 번호와 등록 버튼을 배치 */}
-      <PagingComponent
-        serverData={serverData}
-        movePage={moveProoductListPage}
-      />
-    </div>
-    <div className="shopList_btn fixed bottom-50 right-0 mb-8 mr-8 z-10">
-      <div
-        className="shopList_addBtn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={handleClickAdd}
-      >
-        상품 등록
       </div>
+    ))}
+  </div>
+  <div className="flex justify-center"> {/* 페이지 번호와 등록 버튼을 여기로 이동 */}
+    <PagingComponent
+      serverData={serverData}
+      movePage={moveProoductListPage}
+    />
+  </div>
+  <div className="shopList_btn fixed right-0 mb-8 mr-8 z-10">
+    <div
+      className="shopList_addBtn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      onClick={handleClickAdd}
+    >
+      상품 등록
     </div>
   </div>
 </div>
+
 
 
 

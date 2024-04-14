@@ -23,7 +23,6 @@ const A_ReadComponent = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(auctionProduct.price);
 
   const [openImg, setOpenImg] = useState(false);
   const [selectedImgPath, setSelectedImgPath] = useState("");
@@ -45,62 +44,68 @@ const A_ReadComponent = () => {
   };
 
   return (
-    <div class="mt-20"> 
-  <div class="shopRead_group flex">
-
-
-    <div class="shopRead_img w-400 h-400">
-      {auctionProduct.uploadFileNames.map((imgFile, i) => (
-        <img alt="product" key={i} src={`${host}/auction/view/${imgFile}`} />
-      ))}
-    </div>
-
-    {openImg && (
-      <ImageModal
-        openImg={openImg}
-        callbackFn={closeImageModal}
-        imagePath={selectedImgPath}
-      />
-    )}
-    <div class="shopRead_details">
-      <div class="shopRead_area">
-        <div class="shopRead_wrap">
-          <div class="shopRead_box">
-            <div class="shopRead_pdesc">{auctionProduct.apDesc}</div>
+      <div className="flex justify-center mt-20">
+        <div className="grid grid-cols-2 gap-10">
+          <div className="flex justify-center items-center">
+            <div className="max-w-md">
+              {auctionProduct.uploadFileNames.map((imgFile, i) => (
+                <img
+                  key={i}
+                  src={`${host}/auction/view/${imgFile}`}
+                  className="w-full rounded-lg shadow-md cursor-pointer"
+                  alt="product"
+                  onClick={() => {
+                    setOpenImg(true);
+                    setSelectedImgPath(`${host}/auction/view/${imgFile}`);
+                  }}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-        <div class="shopRead_wrap">
-          <div class="shopRead_box">
-            <div class="shopRead_pname">{auctionProduct.apName}</div>
-          </div>
-        </div>
-        <div>
-          <div class="shopRead-pno">상품 번호: {auctionProduct.apno}</div>
-        </div>
-      </div>
- 
-      <div class="shopRead_area">
-        <div class="shopRead_wrap">
-          <div class="shopRead_box">
-            <div class="shopRead_info">판매가</div>
-            <div class="shopRead_price">
-              {formatNumber(auctionProduct.apStartPrice)}원
+          <div>
+            <div className="max-w-md">
+              <div className="font-bold text-2xl mb-4">{auctionProduct.apName}</div>
+              <div className="text-lg mb-4">{auctionProduct.apDesc}</div>
+              <div className="text-gray-700 mb-4">상품 번호: {auctionProduct.apno}</div>
+              <div className="flex items-center justify-between mb-4">
+                <div className="font-bold text-lg">판매가</div>
+                <div className="text-lg">
+                  {formatNumber(auctionProduct.apStartPrice)}원
+                </div>
+              </div>
+              <div className="flex space-x-4">
+                <button
+                  className="bg-gray-800 text-white px-6 py-2 rounded-md hover:bg-gray-900"
+                  onClick={() => {
+                    // handleChat logic here
+                  }}
+                >
+                  경매 채팅
+                </button>
+                <button
+                  className="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800"
+                  onClick={moveProoductListPage}
+                >
+                  목록
+                </button>
+                <button
+                  className="bg-gray-800 text-white px-6 py-2 rounded-md hover:bg-gray-900"
+                  onClick={() => moveModifyPage(apno)}
+                >
+                  수정
+                </button>
+              </div>
             </div>
           </div>
         </div>
+        {openImg && (
+          <ImageModal
+            openImg={openImg}
+            callbackFn={closeImageModal}
+            imagePath={selectedImgPath}
+          />
+        )}
       </div>
-
-      <div class="shopRead_area">
-        <div class="shopRead_btn">
-          <button type="button" class="shopRead_addBtn">장바구니 담기</button>
-          <button type="button" class="shopRead_paymentBtn">1:1 채팅</button>
-          <button type="button" class="shopRead_listBtn" onClick={moveProoductListPage}>목록</button>
-          <button type="button" class="shopRead_modifyBtn" onClick={() => moveModifyPage(apno)}>수정</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
   );
 };
 
