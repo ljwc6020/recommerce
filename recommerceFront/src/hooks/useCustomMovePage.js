@@ -50,7 +50,7 @@ const useCustomMovePage = (pno) => {
     console.log(queryDefault);
 
     navigate({
-      pathname: `./read/${num}`,
+      pathname: `../read/${num}`,
       search: queryDefault,
     });
   };

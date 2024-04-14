@@ -1,6 +1,7 @@
 package com.recommerceAPI.service;
 
 import com.recommerceAPI.domain.Auction;
+import com.recommerceAPI.domain.AuctionImage;
 import com.recommerceAPI.dto.AuctionDTO;
 import com.recommerceAPI.dto.PageRequestDTO;
 import com.recommerceAPI.dto.PageResponseDTO;
@@ -15,6 +16,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,6 +37,16 @@ public class AuctionServiceImpl implements AuctionService{
         log.info("------------------------");
         Auction auction = modelMapper.map(auctionDTO, Auction.class);
 
+        List<String> uploadFileNames = auctionDTO.getUploadFileNames();
+
+        // 업로드된 파일 이름 리스트가 null이 아닌 경우에만 처리합니다.
+        if (uploadFileNames != null) {
+            uploadFileNames.stream().forEach(uploadName -> {
+                auction.addImageString(uploadName);
+            });
+        }
+
+
         Auction savedAuction = auctionRepository.save(auction);
 
         return savedAuction.getApno();
@@ -45,7 +58,13 @@ public class AuctionServiceImpl implements AuctionService{
 
         Auction auction = result.orElseThrow();
 
+        List<String> fileNameList = auction.getImageList().stream()
+                .map(AuctionImage::getFileName)
+                .collect(Collectors.toList());
+
         AuctionDTO dto = modelMapper.map(auction, AuctionDTO.class);
+
+        dto.setUploadFileNames(fileNameList);
 
         return dto;
     }
@@ -87,11 +106,18 @@ public class AuctionServiceImpl implements AuctionService{
                 pageRequestDTO.getSize(),
                 Sort.by("apno").descending());
 
-        Page<Auction> result = auctionRepository.findAll(pageable);
+        Page<Object[]> result = auctionRepository.selectList(pageable);
 
         List<AuctionDTO> dtoList = result.getContent().stream()
-                .map(auction -> modelMapper.map(auction, AuctionDTO.class))
-                .collect(Collectors.toList());
+                .map(arr -> {
+                    Auction auction = (Auction) arr[0];
+                    AuctionImage auctionImage = (AuctionImage) arr[1];
+                    AuctionDTO auctionDTO = modelMapper.map(auction, AuctionDTO.class);
+                    if (auctionImage != null) {
+                        auctionDTO.setUploadFileNames(Collections.singletonList(auctionImage.getFileName()));
+                    }
+                    return auctionDTO;
+                }).collect(Collectors.toList());
 
         long totalCount = result.getTotalElements();
 

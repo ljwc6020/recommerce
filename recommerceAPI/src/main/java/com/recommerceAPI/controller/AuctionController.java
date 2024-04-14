@@ -10,7 +10,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -46,6 +48,14 @@ public class AuctionController {
     @PostMapping("/")
     public Map<String, Long> register(AuctionDTO auctionDTO) {
         log.info("AuctionDTO: " + auctionDTO);
+
+        List<MultipartFile> files = auctionDTO.getFiles();
+
+        List<String> uploadFileNames = customFileUtil.saveFiles(files);
+
+        auctionDTO.setUploadFileNames(uploadFileNames);
+
+        log.info(auctionDTO.getUploadFileNames());
 
         Long apno = service.register(auctionDTO);
 
