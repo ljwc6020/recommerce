@@ -53,6 +53,7 @@ public class ProductServiceImpl implements ProductService {
                     .pname(product.getPname())
                     .pdesc(product.getPdesc())
                     .price(product.getPrice())
+                    .paddress(product.getPaddress())
                     .delFlag(product.isDelFlag())
                     .build();
 
@@ -90,6 +91,7 @@ public class ProductServiceImpl implements ProductService {
                 .pname(productDTO.getPname())
                 .pdesc(productDTO.getPdesc())
                 .price(productDTO.getPrice())
+                .paddress(productDTO.getPaddress())
                 .build();
 
         //업로드 처리가 끝난 파일들의 이름 리스트
@@ -127,6 +129,7 @@ public class ProductServiceImpl implements ProductService {
                 .pname(product.getPname())
                 .pdesc(product.getPdesc())
                 .price(product.getPrice())
+                .paddress(product.getPaddress())
                 .build();
 
         List<ProductImage> imageList = product.getImageList();
