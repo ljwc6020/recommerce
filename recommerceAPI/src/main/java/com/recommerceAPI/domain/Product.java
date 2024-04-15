@@ -25,6 +25,8 @@ public class Product {
 
     private String pdesc;
 
+    private String paddress;
+
     private boolean delFlag;
 
 
@@ -48,6 +50,10 @@ public class Product {
     public void changeName(String name){
         this.pname = name;
     }
+
+    public void changeAdd(String address){
+            this.paddress = address;
+        }
 
     public void addImage(ProductImage image) {
 

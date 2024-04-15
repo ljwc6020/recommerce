@@ -38,8 +38,8 @@ public class ProductController {
 
         return productService.getList(pageRequestDTO, pname);
     }
-    // 특정 상품 번호(pno)에 대한 상세 정보를 조회하는 API
 
+    // 특정 상품 번호(pno)에 대한 상세 정보를 조회하는 API
     @GetMapping(value ="/products/read/{pno}")
     public ProductDTO getProduct(@PathVariable(name="pno") Long pno) {
         log.info("getProduct: " + pno);

@@ -5,17 +5,15 @@ const host = `${API_SERVER_HOST}`;
 
 // getList 함수에서의 params 사용 간소화
 //상품 리스트 불러오기(메인페이지)
-export const getList = async (pageParam) => {
-  const { page, size } = pageParam;
-
-  try {
-    const res = await axios.get(`${host}`, { params: { page, size } });
-    return res.data;
-  } catch (error) {
-    console.error("Error fetching product list:", error);
-    throw error; // 오류를 호출자에게 전파
-  }
-};
+// export const getList = async (pno) => {
+//   try {
+//     const res = await axios.get(`${host}`, { params: { page, size } });
+//     return res.data;
+//   } catch (error) {
+//     console.error("Error fetching product list:", error);
+//     throw error; // 오류를 호출자에게 전파
+//   }
+// };
 
 //상품 상세페이지
 export const getOne = async (pno) => {

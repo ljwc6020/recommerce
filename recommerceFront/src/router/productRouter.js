@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { Navigate } from "react-router-dom";
 
 const Loading = <div>Loading...</div>;
+const ImageSlice = lazy(() => import("../pages/MainPage"));
 const ProductList = lazy(() => import("../pages/product/P_ListPage"));
 const ProductRead = lazy(() => import("../pages/product/P_ReadPage"));
 const ProductAdd = lazy(() => import("../pages/product/P_AddPage"));
@@ -13,6 +14,7 @@ const productRouter = () => {
       path: "/",
       element: (
         <Suspense fallback={Loading}>
+          <ImageSlice />
           <ProductList />
         </Suspense>
       ),

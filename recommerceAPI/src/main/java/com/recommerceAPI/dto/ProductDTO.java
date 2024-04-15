@@ -16,6 +16,8 @@ public class ProductDTO {
     private int price; // 상품 가격
 
     private String pdesc; // 상품 설명
+    
+    private String paddress; // 판매 장소
 
     private boolean delFlag; // 삭제 플래그
 
