@@ -56,11 +56,12 @@ function Chat({ socket, username, room, closeModal }) {
         onClick={handleOutsideClick}
       ></div>
       <div
-        className="bg-white rounded-lg p-8 max-w-md w-full relative"
+        className="bg-white rounded-lg p-8 relative"
+        style={{ width: "700px", height: "700px" }}
         onClick={handleModalClick}
       >
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-bold text-gray-800">{room}번 채팅방</h2>
+          <h2 className="text-lg font-bold text-black">{room}번 채팅방</h2>
           <button onClick={closeModal}>
             <svg
               className="w-6 h-6 text-gray-600 hover:text-gray-800 transition duration-300"
@@ -75,7 +76,10 @@ function Chat({ socket, username, room, closeModal }) {
             </svg>
           </button>
         </div>
-        <div className="border border-gray-300 rounded-lg h-48 overflow-y-auto mb-4">
+        <div
+          className="border border-gray-300 rounded-lg overflow-y-auto mb-4"
+          style={{ height: "550px" }}
+        >
           {messageList.map((messageContent) => {
             return (
               <Message
@@ -90,7 +94,7 @@ function Chat({ socket, username, room, closeModal }) {
         <div className="flex items-center">
           <input
             ref={inputRef}
-            className="border border-gray-300 rounded-md px-4 py-2 mr-2 w-full"
+            className="border border-gray-300 rounded-md px-4 py-2 mr-2 w-full text-black"
             type="text"
             placeholder="메세지를 입력해주세요"
             onKeyPress={(event) => {
@@ -98,7 +102,7 @@ function Chat({ socket, username, room, closeModal }) {
             }}
           />
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded-md transition duration-300 hover:bg-blue-600"
+            className="bg-blue-500 text-white px-4 py-2 rounded-md transition duration-300 hover:bg-blue-600 flex-shrink-0"
             onClick={sendMessage}
           >
             전송

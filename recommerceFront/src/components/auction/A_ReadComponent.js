@@ -20,7 +20,7 @@ const host = API_SERVER_HOST;
 
 const A_ReadComponent = () => {
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
-  const [username, setUsername] = useState("사용자 이름");
+  const [username, setUsername] = useState("1");
   const [room, setRoom] = useState(1); // 예시로 '기본 방'으로 설정
   const [auctionProduct, setAuctionProduct] = useState(initState);
   const { moveProoductListPage, moveModifyPage } = useCustomMovePage();
@@ -42,32 +42,26 @@ const A_ReadComponent = () => {
     });
   }, [apno]);
 
-  useEffect(() => {
-    if (isChatModalOpen) {
-      connectWebSocket();
-      console.log(socket);
-    }
-  }, [isChatModalOpen]);
-
   const connectWebSocket = () => {
     const soc = new WebSocket(`ws:/localhost:8080/api/chat?room=${room}`);
 
     soc.onopen = () => {
       console.log("WebSocket connection established");
+      console.log("web:" + soc); // 소켓 값 확인
+      setSocket(soc);
+      setRoom(auctionProduct.apno);
+      console.log("set socket" + soc);
       setIsChatModalOpen(true); // 소켓 연결이 완료된 후에 모달을 엽니다.
-      console.log(socket); // 소켓 값 확인
     };
-
-    setSocket(soc);
   };
+  const closeChatModal = () => {
+    socket.close();
+    setSocket(null);
+    setIsChatModalOpen(false);
+  };
+
   const closeImageModal = () => {
     setOpenImg(false);
-  };
-
-  const handleChatOpen = (e) => {
-    e.preventDefault();
-    connectWebSocket();
-    console.log(socket); // 비동기로 웹소켓 연결 시도
   };
 
   return (
@@ -107,7 +101,7 @@ const A_ReadComponent = () => {
             <div className="flex space-x-4">
               <button
                 className="bg-gray-800 text-white px-6 py-2 rounded-md hover:bg-gray-900"
-                onClick={handleChatOpen}
+                onClick={connectWebSocket}
               >
                 경매 채팅
               </button>
@@ -120,7 +114,7 @@ const A_ReadComponent = () => {
                     username={username}
                     room={room}
                     socket={socket}
-                    closeModal={() => setIsChatModalOpen(false)}
+                    closeModal={() => closeChatModal}
                   />
                 )}
                 목록
