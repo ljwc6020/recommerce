@@ -13,7 +13,7 @@ export const getList = async (pageParam) => {
     });
     return res.data;
   } catch (error) {
-    console.error("Error fetching product list:", error);
+    console.error("Error fetching auction list:", error);
     throw error; // 오류를 호출자에게 전파
   }
 };
@@ -24,25 +24,28 @@ export const getOne = async (apno) => {
   return res.data;
 };
 
-export const postOne = async (product) => {
+export const postOne = async (auction) => {
   const header = { headers: { "Content-Type": "multipart/form-data" } };
 
-  const res = await axios.post(`${host}/`, product, header);
+  const res = await axios.post(`${host}/`, auction, header);
+  // const res = await jwtAxios.post(`${host}/`, auction, header); // 권한 작업 후 jwtAxios로 수정 예정
 
   return res.data;
 };
 
-export const putOne = async (pno, product) => {
+export const putOne = async (apno, auction) => {
   const header = { headers: { "Content-Type": "multipart/form-data" } };
 
-  const res = await axios.put(`${host}/${pno}`, product, header);
+  const res = await axios.put(`${host}/${apno}`, auction, header);
+  // const res = await jwtAxios.put(`${host}/${apno}`, auction, header); // 권한 작업 후 jwtAxios로 수정 예정
 
   return res.data;
 };
 
-export const deleteOne = async (product) => {
-  const res = await axios.delete(`${host}/${product.pno}`, {
-    data: product,
+export const deleteOne = async (auction) => {
+  const res = await axios.delete(`${host}/${auction.apno}`, {
+    // const res = await jwtAxios.delete(`${host}/${auction.apno}`, { // 권한 작업 후 jwtAxios로 수정 예정
+    data: auction,
   });
 
   return res.data;
