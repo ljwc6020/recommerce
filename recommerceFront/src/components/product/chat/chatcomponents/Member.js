@@ -1,7 +1,11 @@
 import React from "react";
 
-const Member = () => {
-  return <div></div>;
+export const Member = (props) => {
+  console.log(props);
+  return (
+    <>
+      <div>유저 목록</div>
+      <p>{props.member}</p>
+    </>
+  );
 };
-
-export default Member;
