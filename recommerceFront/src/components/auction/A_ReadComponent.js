@@ -5,8 +5,7 @@ import { API_SERVER_HOST } from "../../api/userApi";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { formatNumber } from "../../util/formatNumberUtil";
-import ImageModal from "../modal/ImageModal";
-import LoadingModal from "../modal/LoadingModal";
+
 import A_Chat from "../auction/chat/A_Chat";
 
 const initState = {
@@ -129,13 +128,13 @@ const A_ReadComponent = () => {
           </div>
         </div>
       </div>
-      {openImg && (
+      {/* {openImg && (
         <ImageModal
           openImg={openImg}
           callbackFn={closeImageModal}
           imagePath={selectedImgPath}
         />
-      )}
+      )} */}
     </div>
   );
 };

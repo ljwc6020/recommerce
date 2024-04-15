@@ -2,3 +2,4 @@
 recommerceAPI/src/main/resources/application.properties
 recommerceAPI/build.gradle
 /recommerceAPI/upload
+recommerceFront/yarn.lock
