@@ -41,13 +41,13 @@ public class PurchaseListServiceImpl implements PurchaseListService {
     }
 
     @Override
-    public void deletePurchaseList(Long id) {
-        purchaseListRepository.deleteById(id);
+    public void deletePurchaseList(Long puno) {
+        purchaseListRepository.deleteByPuno(puno);
     }
 
     @Override
-    public PurchaseListDTO findPurchaseListById(Long id) {
-        PurchaseList purchaseList = purchaseListRepository.findById(id).orElseThrow(() -> new RuntimeException("Purchase list not found"));
+    public PurchaseListDTO findPurchaseListByPuno(Long puno) {
+        PurchaseList purchaseList = purchaseListRepository.findById(puno).orElseThrow(() -> new RuntimeException("Purchase list not found"));
         return modelMapper.map(purchaseList, PurchaseListDTO.class);
     }
 
@@ -73,19 +73,19 @@ public class PurchaseListServiceImpl implements PurchaseListService {
     }
 
     @Override
-    public void deletePurchaseListItem(Long id) {
-        purchaseListItemRepository.deleteById(id);
+    public void deletePurchaseListItem(Long puino) {
+        purchaseListItemRepository.deleteById(puino);
     }
 
     @Override
-    public PurchaseListItemDTO findPurchaseListItemById(Long id) {
-        PurchaseListItem item = purchaseListItemRepository.findById(id).orElseThrow(() -> new RuntimeException("Purchase list item not found"));
+    public PurchaseListItemDTO findPurchaseListItemBy(Long puino) {
+        PurchaseListItem item = purchaseListItemRepository.findById(puino).orElseThrow(() -> new RuntimeException("Purchase list item not found"));
         return modelMapper.map(item, PurchaseListItemDTO.class);
     }
 
     @Override
-    public List<PurchaseListItemDTO> findAllItemsByPurchaseListId(Long purchaseListId) {
-        List<PurchaseListItem> items = purchaseListItemRepository.findByPurchaseListId(purchaseListId);
+    public List<PurchaseListItemDTO> findAllItemsByPurchaseListPuino(Long purchaseListPuno) {
+        List<PurchaseListItem> items = purchaseListItemRepository.findByPurchaseListPuno(purchaseListPuno);
         return items.stream().map(i -> modelMapper.map(i, PurchaseListItemDTO.class)).collect(Collectors.toList());
     }
 }

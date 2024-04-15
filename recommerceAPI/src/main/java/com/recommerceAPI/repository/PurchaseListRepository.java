@@ -21,5 +21,5 @@ public interface PurchaseListRepository extends JpaRepository<PurchaseList, Long
     List<PurchaseList> findByUserEmailAndProductPno(@Param("email") String email, @Param("pno") Long pno);
 
     // 구매 목록 ID를 사용하여 구매 목록을 삭제
-    void deleteById(Long id);
+    void deleteByPuno(Long puno);
 }

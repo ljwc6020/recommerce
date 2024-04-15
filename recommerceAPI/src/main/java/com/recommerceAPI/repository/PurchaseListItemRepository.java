@@ -12,10 +12,7 @@ import java.util.List;
 public interface PurchaseListItemRepository extends JpaRepository<PurchaseListItem, Long> {
 
     // 특정 구매 목록 ID에 속하는 모든 구매 목록 아이템을 조회하는 메서드
-    @Query("select pli from PurchaseListItem pli where pli.purchaseList.id = :purchaseListId")
-    List<PurchaseListItem> findByPurchaseListId(@Param("purchaseListId") Long purchaseListId);
+    @Query("select pli from PurchaseListItem pli where pli.purchaseList.puno = :purchaseListPuno")
+    List<PurchaseListItem> findByPurchaseListPuno(@Param("purchaseListPuno") Long purchaseListPuno);
 
-    // 특정 상품 번호를 포함하는 구매 목록 아이템을 조회하는 메서드
-    @Query("select pli from PurchaseListItem pli where pli.product.pno = :productPno")
-    List<PurchaseListItem> findByProductPno(@Param("productPno") Long productPno);
 }

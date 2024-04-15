@@ -16,7 +16,7 @@ public class PurchaseList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // 구매 목록 ID
+    private Long puno; // 구매 목록 ID
 
     @ManyToOne
     @JoinColumn(name = "user_email")

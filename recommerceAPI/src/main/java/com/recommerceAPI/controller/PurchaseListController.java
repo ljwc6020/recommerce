@@ -24,24 +24,24 @@ public class PurchaseListController {
     }
 
     // 기존 구매 목록 업데이트
-    @PutMapping("/lists/{id}")
-    public ResponseEntity<PurchaseListDTO> updatePurchaseList(@PathVariable Long id, @RequestBody PurchaseListDTO purchaseListDTO) {
-        purchaseListDTO.setId(id);
+    @PutMapping("/lists/{puno}")
+    public ResponseEntity<PurchaseListDTO> updatePurchaseList(@PathVariable Long puno, @RequestBody PurchaseListDTO purchaseListDTO) {
+        purchaseListDTO.setPuno(puno);
         PurchaseListDTO updated = purchaseListService.updatePurchaseList(purchaseListDTO);
         return ResponseEntity.ok(updated);
     }
 
     // 구매 목록 삭제
-    @DeleteMapping("/lists/{id}")
-    public ResponseEntity<Void> deletePurchaseList(@PathVariable Long id) {
-        purchaseListService.deletePurchaseList(id);
+    @DeleteMapping("/lists/{puno}")
+    public ResponseEntity<Void> deletePurchaseList(@PathVariable Long puno) {
+        purchaseListService.deletePurchaseList(puno);
         return ResponseEntity.ok().build();
     }
 
     // ID로 구매 목록 조회
-    @GetMapping("/lists/{id}")
-    public ResponseEntity<PurchaseListDTO> getPurchaseListById(@PathVariable Long id) {
-        PurchaseListDTO purchaseList = purchaseListService.findPurchaseListById(id);
+    @GetMapping("/lists/{puno}")
+    public ResponseEntity<PurchaseListDTO> getPurchaseListByPuno(@PathVariable Long puno) {
+        PurchaseListDTO purchaseList = purchaseListService.findPurchaseListByPuno(puno);
         return ResponseEntity.ok(purchaseList);
     }
 
@@ -60,24 +60,24 @@ public class PurchaseListController {
     }
 
     // 구매 목록 아이템 업데이트
-    @PutMapping("/items/{id}")
-    public ResponseEntity<PurchaseListItemDTO> updatePurchaseListItem(@PathVariable Long id, @RequestBody PurchaseListItemDTO purchaseListItemDTO) {
-        purchaseListItemDTO.setId(id);
+    @PutMapping("/items/{puino}")
+    public ResponseEntity<PurchaseListItemDTO> updatePurchaseListItem(@PathVariable Long puino, @RequestBody PurchaseListItemDTO purchaseListItemDTO) {
+        purchaseListItemDTO.setPuino(puino);
         PurchaseListItemDTO updatedItem = purchaseListService.updatePurchaseListItem(purchaseListItemDTO);
         return ResponseEntity.ok(updatedItem);
     }
 
     // 구매 목록 아이템 삭제
-    @DeleteMapping("/items/{id}")
-    public ResponseEntity<Void> deletePurchaseListItem(@PathVariable Long id) {
-        purchaseListService.deletePurchaseListItem(id);
+    @DeleteMapping("/items/{puino}")
+    public ResponseEntity<Void> deletePurchaseListItem(@PathVariable Long puino) {
+        purchaseListService.deletePurchaseListItem(puino);
         return ResponseEntity.ok().build();
     }
 
     // 특정 구매 목록 ID에 속하는 모든 아이템 조회
-    @GetMapping("/items/list/{purchaseListId}")
-    public ResponseEntity<List<PurchaseListItemDTO>> getAllItemsByPurchaseListId(@PathVariable Long purchaseListId) {
-        List<PurchaseListItemDTO> items = purchaseListService.findAllItemsByPurchaseListId(purchaseListId);
+    @GetMapping("/items/list/{purchaseListPuino}")
+    public ResponseEntity<List<PurchaseListItemDTO>> getAllItemsByPurchaseListPuno(@PathVariable Long purchaseListPuno) {
+        List<PurchaseListItemDTO> items = purchaseListService.findAllItemsByPurchaseListPuino(purchaseListPuno);
         return ResponseEntity.ok(items);
     }
 }
