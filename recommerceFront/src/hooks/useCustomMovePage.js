@@ -89,7 +89,7 @@ const useCustomMovePage = (pno) => {
     setRefresh(!refresh);
   };
 
-  const moveProoductListPage = (pageParam) => {
+  const moveProductListPage = (pageParam) => {
     let queryString = "";
 
     if (pageParam) {
@@ -116,7 +116,7 @@ const useCustomMovePage = (pno) => {
     moveModifyPage,
     moveReadPage,
     moveListPage,
-    moveProoductListPage,
+    moveProductListPage,
     moveReviewQnaListPage,
     page,
     size,
