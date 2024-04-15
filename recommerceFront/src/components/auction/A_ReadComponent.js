@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { formatNumber } from "../../util/formatNumberUtil";
 import ImageModal from "../modal/ImageModal";
 import LoadingModal from "../modal/LoadingModal";
-import Chat from "../product/chat/chatcomponents/Chat";
+import A_Chat from "../auction/chat/A_Chat";
 
 const initState = {
   apName: "",
@@ -110,7 +110,7 @@ const A_ReadComponent = () => {
                 onClick={moveProoductListPage}
               >
                 {isChatModalOpen && (
-                  <Chat
+                  <A_Chat
                     username={username}
                     room={room}
                     socket={socket}
