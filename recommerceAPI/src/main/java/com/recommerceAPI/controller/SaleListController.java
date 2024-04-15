@@ -3,60 +3,71 @@ package com.recommerceAPI.controller;
 import com.recommerceAPI.dto.SaleListDTO;
 import com.recommerceAPI.dto.SaleListItemDTO;
 import com.recommerceAPI.service.SaleListService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 판매 목록과 판매 아이템을 관리하는 REST 컨트롤러입니다.
+ */
 @RestController
-@RequestMapping("/api/sale")
-@RequiredArgsConstructor
+@RequestMapping("/api/sales")
 public class SaleListController {
 
-    private final SaleListService saleListService;
+    @Autowired
+    private SaleListService saleListService;
 
-    @PostMapping("/lists")
+    // 판매 목록을 조회합니다.
+    @GetMapping("/saleLists/{sno}")
+    public ResponseEntity<SaleListDTO> getSaleList(@PathVariable Long sno) {
+        return ResponseEntity.ok(saleListService.getSaleList(sno));
+    }
+
+    // 판매 아이템을 조회합니다.
+    @GetMapping("/saleItems/{sino}")
+    public ResponseEntity<SaleListItemDTO> getSaleListItem(@PathVariable Long sino) {
+        return ResponseEntity.ok(saleListService.getSaleListItem(sino));
+    }
+
+    // 특정 판매 목록의 모든 판매 아이템을 조회합니다.
+    @GetMapping("/saleLists/{sno}/items")
+    public ResponseEntity<List<SaleListItemDTO>> listSaleItemsInSale(@PathVariable Long sno) {
+        return ResponseEntity.ok(saleListService.listSaleItemsInSale(sno));
+    }
+
+    // 새로운 판매 목록을 생성합니다.
+    @PostMapping("/saleLists")
     public ResponseEntity<SaleListDTO> createSaleList(@RequestBody SaleListDTO saleListDTO) {
-        SaleListDTO createdSaleList = saleListService.createSaleList(saleListDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdSaleList);
+        return new ResponseEntity<>(saleListService.createSaleList(saleListDTO), HttpStatus.CREATED);
     }
 
-    @GetMapping("/lists/{id}")
-    public ResponseEntity<SaleListDTO> getSaleListById(@PathVariable Long id) {
-        SaleListDTO saleList = saleListService.getSaleList(id);
-        return saleList != null ? ResponseEntity.ok(saleList) : ResponseEntity.notFound().build();
+    // 특정 판매 목록에 판매 아이템을 추가합니다.
+    @PostMapping("/saleLists/{sno}/items")
+    public ResponseEntity<SaleListItemDTO> addSaleItemToSaleList(@PathVariable Long sno, @RequestBody SaleListItemDTO saleListItemDTO) {
+        return new ResponseEntity<>(saleListService.addSaleItemToSaleList(sno, saleListItemDTO), HttpStatus.CREATED);
     }
 
-    @PutMapping("/lists/{id}")
-    public ResponseEntity<SaleListDTO> updateSaleList(@PathVariable Long id, @RequestBody SaleListDTO saleListDTO) {
-        saleListDTO.setId(id);
-        SaleListDTO updatedSaleList = saleListService.updateSaleList(saleListDTO);
-        return updatedSaleList != null ? ResponseEntity.ok(updatedSaleList) : ResponseEntity.notFound().build();
+    // 판매 목록을 업데이트합니다.
+    @PutMapping("/saleLists/{sno}")
+    public ResponseEntity<SaleListDTO> updateSaleList(@RequestBody SaleListDTO saleListDTO, @PathVariable Long sno) {
+        saleListDTO.setSno(sno);
+        return ResponseEntity.ok(saleListService.updateSaleList(saleListDTO));
     }
 
-    @DeleteMapping("/lists/{id}")
-    public ResponseEntity<Void> deleteSaleList(@PathVariable Long id) {
-        saleListService.deleteSaleList(id);
+    // 주어진 ID의 판매 목록을 삭제합니다.
+    @DeleteMapping("/saleLists/{sno}")
+    public ResponseEntity<Void> deleteSaleList(@PathVariable Long sno) {
+        saleListService.deleteSaleList(sno);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/items")
-    public ResponseEntity<SaleListItemDTO> createSaleListItem(@RequestBody SaleListItemDTO saleListItemDTO) {
-        SaleListItemDTO createdSaleListItem = saleListService.createSaleListItem(saleListItemDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdSaleListItem);
-    }
-
-    @GetMapping("/items/{id}")
-    public ResponseEntity<SaleListItemDTO> getSaleListItemById(@PathVariable Long id) {
-        SaleListItemDTO saleListItem = saleListService.getSaleListItem(id);
-        return saleListItem != null ? ResponseEntity.ok(saleListItem) : ResponseEntity.notFound().build();
-    }
-
-    @DeleteMapping("/items/{id}")
-    public ResponseEntity<Void> deleteSaleListItem(@PathVariable Long id) {
-        saleListService.deleteSaleListItem(id);
+    // 주어진 ID의 판매 아이템을 판매 목록에서 제거합니다.
+    @DeleteMapping("/saleItems/{sino}")
+    public ResponseEntity<Void> removeSaleItemFromSaleList(@PathVariable Long sino) {
+        saleListService.removeSaleItemFromSaleList(sino);
         return ResponseEntity.ok().build();
     }
 }

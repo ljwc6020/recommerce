@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SaleListItemDTO {
-    private Long id; // 판매 아이템의 고유 ID
-    private Long saleListId; // 이 아이템이 속한 판매 목록의 ID
-    private Long productId; // 판매된 상품의 ID
+    private Long sino; // 판매 아이템의 고유 ID
+    private Long saleListSino; // 이 아이템이 속한 판매 목록의 ID
+    private Long productPno; // 판매된 상품의 ID
     private LocalDateTime saleDate; // 판매 날짜
 }

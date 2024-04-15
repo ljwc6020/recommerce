@@ -12,8 +12,8 @@ import java.util.List;
 public interface SaleListItemRepository extends JpaRepository<SaleListItem, Long> {
 
     // 특정 판매 목록 ID에 속하는 모든 판매 목록 아이템을 조회하는 메서드
-    @Query("select sli from SaleListItem sli where sli.saleList.id = :saleListId")
-    List<SaleListItem> findBySaleListId(@Param("saleListId") Long saleListId);
+    @Query("select sli from SaleListItem sli where sli.saleList.sno = :saleListSno")
+    List<SaleListItem> findBySaleListSno(@Param("saleListSno") Long saleListSno);
 
     // 특정 상품 번호(pno)를 포함하는 판매 목록 아이템을 조회하는 메서드
     @Query("select sli from SaleListItem sli where sli.product.pno = :productPno")

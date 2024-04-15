@@ -19,12 +19,10 @@ public class User {
     private String email;
 
     private String pw; // 사용자 비밀번호
-
     private String nickname; // 사용자 닉네임
-
     private String phone; // 사용자 전화번호
-
     private String birth; // 사용자 생년월일
+    private double averageRating; // 사용자의 평균 평점
 
     @ElementCollection(fetch = FetchType.LAZY) // userRoleList를 별도의 컬렉션으로 관리하며 지연 로딩을 사용
     @Builder.Default // Lombok 빌더의 기본값으로, userRoleList를 비어 있는 ArrayList로 초기화
@@ -55,6 +53,10 @@ public class User {
         this.birth = birth;
     }
 
+    // 사용자의 평균 평점을 업데이트하는 메서드
+    public void updateRating(double newRating) {
+        this.averageRating = newRating;
+    }
 
     // 사용자의 탈퇴 요청 시 제공된 비밀번호와 일치하는지 확인하는 메서드
     public boolean PasswordForDeletion(String password) {
@@ -70,6 +72,4 @@ public class User {
     public boolean validatePasswordForDeletion(String deletionPassword) {
         return this.pw.equals(deletionPassword);
     }
-
-
 }

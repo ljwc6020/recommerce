@@ -8,76 +8,107 @@ import com.recommerceAPI.repository.SaleListRepository;
 import com.recommerceAPI.repository.SaleListItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * SaleListService 인터페이스의 구현체입니다.
+ * 판매 목록과 판매 아이템에 대한 데이터 처리를 담당합니다.
+ */
 @RequiredArgsConstructor
 @Service
 public class SaleListServiceImpl implements SaleListService {
 
-    private final SaleListRepository saleListRepository; // 판매 목록 관련 데이터 접근을 위한 리포지토리
-    private final SaleListItemRepository saleListItemRepository; // 판매 아이템 관련 데이터 접근을 위한 리포지토리
-    private final ModelMapper modelMapper; // 모델 매퍼
+    @Autowired
+    private SaleListRepository saleListRepository;
 
+    @Autowired
+    private SaleListItemRepository saleListItemRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    // 주어진 ID를 가진 판매 목록을 조회합니다.
     @Override
-    public SaleListDTO getSaleList(Long id) {
-        SaleList saleList = saleListRepository.findById(id).orElse(null);
-        return saleList != null ? modelMapper.map(saleList, SaleListDTO.class) : null;
+    @Transactional(readOnly = true)
+    public SaleListDTO getSaleList(Long sno) {
+        SaleList saleList = saleListRepository.findById(sno)
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 판매 목록을 찾을 수 없습니다: " + sno));
+        return modelMapper.map(saleList, SaleListDTO.class);
     }
 
+    // 주어진 ID를 가진 판매 아이템을 조회합니다.
     @Override
-    public SaleListItemDTO getSaleListItem(Long id) {
-        SaleListItem saleListItem = saleListItemRepository.findById(id).orElse(null);
-        return saleListItem != null ? modelMapper.map(saleListItem, SaleListItemDTO.class) : null;
+    @Transactional(readOnly = true)
+    public SaleListItemDTO getSaleListItem(Long sino) {
+        SaleListItem saleItem = saleListItemRepository.findById(sino)
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 판매 아이템을 찾을 수 없습니다: " + sino));
+        return modelMapper.map(saleItem, SaleListItemDTO.class);
     }
 
+    // 특정 판매 목록에 속하는 모든 판매 아이템을 조회합니다.
     @Override
-    public List<SaleListItemDTO> getSaleListItemsBySaleListId(Long saleListId) {
-        List<SaleListItem> saleListItems = saleListItemRepository.findBySaleListId(saleListId);
-        return saleListItems.stream()
+    @Transactional(readOnly = true)
+    public List<SaleListItemDTO> listSaleItemsInSale(Long sno) {
+        List<SaleListItem> items = saleListItemRepository.findBySaleListSno(sno);
+        return items.stream()
                 .map(item -> modelMapper.map(item, SaleListItemDTO.class))
                 .collect(Collectors.toList());
     }
 
+    // 새로운 판매 목록을 생성합니다.
     @Override
+    @Transactional
     public SaleListDTO createSaleList(SaleListDTO saleListDTO) {
         SaleList saleList = modelMapper.map(saleListDTO, SaleList.class);
-        SaleList savedSaleList = saleListRepository.save(saleList);
-        return modelMapper.map(savedSaleList, SaleListDTO.class);
+        saleList = saleListRepository.save(saleList);
+        return modelMapper.map(saleList, SaleListDTO.class);
     }
 
+    // 특정 판매 목록에 새로운 판매 아이템을 추가합니다.
     @Override
-    public SaleListItemDTO createSaleListItem(SaleListItemDTO saleListItemDTO) {
-        SaleListItem saleListItem = modelMapper.map(saleListItemDTO, SaleListItem.class);
-        SaleListItem savedSaleListItem = saleListItemRepository.save(saleListItem);
-        return modelMapper.map(savedSaleListItem, SaleListItemDTO.class);
+    @Transactional
+    public SaleListItemDTO addSaleItemToSaleList(Long sno, SaleListItemDTO saleListItemDTO) {
+        SaleList saleList = saleListRepository.findById(sno)
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 판매 목록을 찾을 수 없습니다: " + sno));
+        SaleListItem saleItem = modelMapper.map(saleListItemDTO, SaleListItem.class);
+        saleItem.setSaleList(saleList);
+        saleItem = saleListItemRepository.save(saleItem);
+        return modelMapper.map(saleItem, SaleListItemDTO.class);
     }
 
+    // 판매 목록 정보를 업데이트합니다.
     @Override
+    @Transactional
     public SaleListDTO updateSaleList(SaleListDTO saleListDTO) {
-        // 구현 내용은 필요에 따라 추가해주세요.
-        return saleListDTO;
+        SaleList existingSaleList = saleListRepository.findById(saleListDTO.getSno())
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 판매 목록을 찾을 수 없습니다: " + saleListDTO.getSno()));
+        modelMapper.map(saleListDTO, existingSaleList);
+        existingSaleList = saleListRepository.save(existingSaleList);
+        return modelMapper.map(existingSaleList, SaleListDTO.class);
     }
 
+    // 주어진 ID의 판매 목록을 삭제합니다.
     @Override
-    public void deleteSaleList(Long id) {
-        saleListRepository.deleteById(id);
+    @Transactional
+    public void deleteSaleList(Long sno) {
+        if (!saleListRepository.existsById(sno)) {
+            throw new IllegalArgumentException("해당 ID의 판매 목록을 찾을 수 없습니다: " + sno);
+        }
+        saleListRepository.deleteById(sno);
     }
 
+    // 주어진 ID의 판매 아이템을 판매 목록에서 제거합니다.
     @Override
-    public void deleteSaleListItem(Long id) {
-        saleListItemRepository.deleteById(id);
-    }
-
-    // 특정 판매 목록 ID에 속하는 모든 판매 목록 아이템을 조회하는 메서드
-    public List<SaleListItem> findBySaleListId(Long saleListId) {
-        return saleListItemRepository.findBySaleListId(saleListId);
-    }
-
-    // 특정 상품 번호(pno)를 포함하는 판매 목록 아이템을 조회하는 메서드
-    public List<SaleListItem> findByProductPno(Long productPno) {
-        return saleListItemRepository.findByProductPno(productPno);
+    @Transactional
+    public void removeSaleItemFromSaleList(Long sino) {
+        if (!saleListItemRepository.existsById(sino)) {
+            throw new IllegalArgumentException("해당 ID의 판매 아이템을 찾을 수 없습니다: " + sino);
+        }
+        saleListItemRepository.deleteById(sino);
     }
 }

@@ -1,22 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import ReviewList from "./components/ReviewList"; // 후기 목록 컴포넌트
+import ReviewForm from "./components/ReviewForm"; // 후기 추가 폼 컴포넌트
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>유저 후기작성</h1>
+        <ReviewForm /> // 새 후기를 추가하는 폼
+        <ReviewList /> // 사용자 후기 목록을 보여주는 컴포넌트
       </header>
     </div>
   );

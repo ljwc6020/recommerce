@@ -16,15 +16,11 @@ public class SaleList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // 판매 목록의 고유 ID
+    private Long sno; // 판매 목록의 고유 ID
 
     @ManyToOne
-    @JoinColumn(name = "seller_id")
+    @JoinColumn(name = "seller_sno")
     private User seller; // 판매자 정보
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product; // 판매된 상품 정보
 
 
 }
