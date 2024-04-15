@@ -5,10 +5,12 @@ const host = `${API_SERVER_HOST}/auction`;
 
 // getList 함수에서의 params 사용 간소화
 export const getList = async (pageParam) => {
-  const { page, size } = pageParam;
+  const { page, size, apName, apCategory } = pageParam;
 
   try {
-    const res = await axios.get(`${host}/list`, { params: { page, size } });
+    const res = await axios.get(`${host}/list`, {
+      params: { page, size, apName, apCategory },
+    });
     return res.data;
   } catch (error) {
     console.error("Error fetching product list:", error);

@@ -100,13 +100,13 @@ public class AuctionServiceImpl implements AuctionService{
     }
 
     @Override
-    public PageResponseDTO<AuctionDTO> list(PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<AuctionDTO> list(PageRequestDTO pageRequestDTO, String apName, String apCategory) {
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPage() - 1,
                 pageRequestDTO.getSize(),
                 Sort.by("apno").descending());
 
-        Page<Object[]> result = auctionRepository.selectList(pageable);
+        Page<Object[]> result = auctionRepository.selectList(apName,apCategory,pageable);
 
         List<AuctionDTO> dtoList = result.getContent().stream()
                 .map(arr -> {

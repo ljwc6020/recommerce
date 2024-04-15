@@ -13,6 +13,5 @@ public interface AuctionService {
     void modify(AuctionDTO auctionDTO);
 
     void remove(Long apno);
-
-    PageResponseDTO<AuctionDTO> list(PageRequestDTO pageRequestDTO);
+    PageResponseDTO<AuctionDTO> list(PageRequestDTO pageRequestDTO,String apName, String apCategory);
 }

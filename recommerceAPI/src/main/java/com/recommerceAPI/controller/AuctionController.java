@@ -31,11 +31,12 @@ public class AuctionController {
     }
 
     @GetMapping("/list")
-    public PageResponseDTO<AuctionDTO> list(PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<AuctionDTO> list(PageRequestDTO pageRequestDTO, String apName, String apCategory) {
 
         log.info(pageRequestDTO);
 
-        return service.list(pageRequestDTO);
+        PageResponseDTO responseDTO = service.list(pageRequestDTO,apName,apCategory);
+        return responseDTO;
     }
 
     @GetMapping("/view/{fileName}")
