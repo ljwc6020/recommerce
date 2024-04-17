@@ -25,7 +25,7 @@ public interface UserService {
     void modifyUser(UserDTO userDTO);
 
 
-    boolean validateCurrentPassword(String email, String currentPassword);
+    boolean validateCurrentPassword(String email, String pw);
 
     boolean validatePasswordForDeletion(String email, String deletionPassword);
 

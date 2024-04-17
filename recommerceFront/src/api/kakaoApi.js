@@ -3,7 +3,7 @@ import { API_SERVER_HOST } from "./userApi";
 
 const rest_api_key = `97637f372fc9ec02ddb71bb5789d583c`; //REST키값
 
-const redirect_uri = `http://localhost:3011/user/kakao`;
+const redirect_uri = `http://localhost:3000/user/kakao`;
 
 const auth_code_path = `https://kauth.kakao.com/oauth/authorize`;
 

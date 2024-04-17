@@ -58,14 +58,10 @@ public class User {
         this.averageRating = newRating;
     }
 
-    // 사용자의 탈퇴 요청 시 제공된 비밀번호와 일치하는지 확인하는 메서드
-    public boolean PasswordForDeletion(String password) {
-        return this.pw.equals(password);
-    }
 
     // 사용자의 현재 비밀번호가 유효한지 확인합니다.
-    public boolean validateCurrentPassword(String currentPassword) {
-        return this.pw.equals(currentPassword);
+    public boolean validateCurrentPassword(String pw) {
+        return this.pw.equals(pw);
     }
 
     // 사용자의 계정 삭제 요청 시 제공된 비밀번호가 유효한지 확인합니다.

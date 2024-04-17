@@ -12,7 +12,7 @@ const KakaoLoginComponent = () => {
       <div className="flex justify-center  w-full">
         <Link to={link}>
           <button className="text-3xl text-center m-6 text-black font-extrabold w-3/4 bg-yellow-500 shadow-sm rounded p-2">
-            KAKAO LOGIN
+            Kakao 로그인
           </button>
         </Link>
       </div>

@@ -1,36 +1,55 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { readUser } from "../../api/userApi"; // 사용자 정보를 가져오는 API 함수 임포트
+import { Link, useNavigate } from "react-router-dom";
+import { readUser, validateCurrentPassword } from "../../api/userApi";
+import PasswordConfirmModal from "../modal/PasswordConfirmModal";
 
 const MyPageComponent = () => {
   const user = useSelector((state) => state.loginSlice); // 로그인 정보 가져오기
   const [userData, setUserData] = useState(null); // 사용자 정보 상태
+  const [showModal, setShowModal] = useState(false); // 모달 표시 상태
+  const navigate = useNavigate();
 
   const email = user.email;
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        // 서버에서 사용자 정보 가져오기
-        const userData = await readUser(email);
-        // 사용자 정보 설정
-        setUserData(userData);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
     if (email) {
+      const fetchUserData = async () => {
+        try {
+          const fetchedUserData = await readUser(email);
+          setUserData(fetchedUserData);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
       fetchUserData();
     }
   }, [email]);
+
+  const handleConfirmPassword = async (pw) => {
+    if (!pw) {
+      alert("비밀번호를 입력해주세요.");
+      return;
+    }
+
+    try {
+      const result = await validateCurrentPassword(email, pw);
+      if (result.valid) {
+        setShowModal(false);
+        navigate("/user/modify");
+      } else {
+        alert(result.message || "비밀번호가 올바르지 않습니다.");
+      }
+    } catch (error) {
+      console.error("Password validation failed:", error);
+      alert("비밀번호 검증에 실패했습니다.");
+    }
+  };
 
   return (
     <div className="myPageBundle">
       <span>My Page</span>
       <div className="InfoBundle">
-        {/* 사용자 정보 표시 */}
         {userData && (
           <div className="userInfo">
             <div>E-mail: {userData.email}</div>
@@ -40,13 +59,17 @@ const MyPageComponent = () => {
           </div>
         )}
         <div className="btnBundle">
-          <Link to={`/user/modify`}>
-            <button>정보 수정</button>
-          </Link>
-          <Link to={`/user/remove/${email}`}>
-            <button>회원 탈퇴</button>
-          </Link>
+          <button onClick={() => setShowModal(true)}>정보 수정</button>
+          <button onClick={() => navigate(`/user/remove/${email}`)}>
+            회원 탈퇴
+          </button>
         </div>
+        {showModal && (
+          <PasswordConfirmModal
+            onConfirm={handleConfirmPassword}
+            onCancel={() => setShowModal(false)}
+          />
+        )}
       </div>
     </div>
   );

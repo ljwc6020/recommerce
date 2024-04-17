@@ -95,9 +95,9 @@ public class UserController {
         }
     }
     // 현재 비밀번호 검증을 처리하는 엔드포인트
-    @GetMapping("/validate-password")
-    public ResponseEntity<?> validateCurrentPassword(@RequestParam String email, @RequestParam String currentPassword) {
-        boolean isValid = userService.validateCurrentPassword(email, currentPassword);
+    @PostMapping("/validate-password")
+    public ResponseEntity<?> validateCurrentPassword(@RequestParam String email, @RequestParam String pw) {
+        boolean isValid = userService.validateCurrentPassword(email, pw);
         if (isValid) {
             return ResponseEntity.ok(Map.of("message", "Password is valid"));
         } else {

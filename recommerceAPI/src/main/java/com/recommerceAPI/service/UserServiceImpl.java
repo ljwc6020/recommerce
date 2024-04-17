@@ -78,11 +78,11 @@ public class UserServiceImpl implements UserService {
 
     // 사용자의 개인정보 변경 시 비밀번호 확인 메서드
     @Override
-    public boolean validateCurrentPassword(String email, String currentPassword) {
+    public boolean validateCurrentPassword(String email, String pw) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
 
-        return passwordEncoder.matches(currentPassword, user.getPw());
+        return passwordEncoder.matches(pw, user.getPw());
     }
 
     @Override
