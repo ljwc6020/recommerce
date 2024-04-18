@@ -47,12 +47,3 @@ export const sendEmail = async (email) => {
   const res = await axios.post(`${host}/reset-pw`, formData);
   return res.data;
 };
-
-// 현재 비밀번호 검증
-export const validateCurrentPassword = async (email, pw) => {
-  const res = await jwtAxios.post(`${host}/validate-password`, {
-    email, // 사용자의 이메일
-    pw, // 사용자의 현재 비밀번호
-  });
-  return res.data; // 예상 출력: { valid: true } 또는 { valid: false, message: "Invalid password" }
-};
